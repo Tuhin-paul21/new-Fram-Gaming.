@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ProGamer - Your Gaming Portfolio</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" type="text/css"> <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" type="text/css"> <style type="text/css"> /* Added type="text/css" */
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: black;
+      color: #e0e0e0;
+      padding: 25px; /* extra from your request */
+    }
+    .bg-card { background-color: #162447; }
+    .border-accent { border-color: #1f4068; }
+    .text-accent { color: #e43f5a; }
+    .btn-primary {
+      background-color: #e43f5a;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .btn-primary:hover {
+      background-color: #b8324f;
+      transform: translateY(-2px);
+    }
+
+    /* Hero background animation */
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .hero-animated-bg {
+      background: linear-gradient(270deg, #1a1a2e, #e43f5a, #162447);
+      background-size: 500% 60%;
+      animation: gradientMove 5s ease infinite;
+    }
+
+    /* New Video Card Styles */
+    .video-card {
+      max-width: 600px;
+      margin: auto;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      background: linear-gradient(135deg, #a855f7, #ec4899, #ef4444);
+      padding: 2px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .video-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+    }
+    .video-card-inner {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .video-section {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+    }
+    .video-section video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      transition: transform 0.3s ease;
+    }
+    .video-section:hover video { transform: scale(1.05); }
+    .video-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+    }
+    .video-section:hover .video-overlay { background: rgba(0,0,0,0.4); }
+    .description {
+      padding: 1.5rem;
+      transition: background 0.3s ease;
+    }
+    .video-card:hover .description { background: rgba(249, 250, 251, 0.8); }
+    .description h2 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      color: #111827;
+      transition: color 0.3s ease;
+    }
+    .video-card:hover .description h2 { color: #0d0c0d; }
+    .description p { color: #4b5563; line-height: 1.6; }
+    .watch-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      padding: 0.5rem 1.25rem;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #060209, #ec4899);
+      color: white;
+      font-weight: 500;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+    .watch-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+    }
+    .watch-btn svg { width: 20px; height: 20px; fill: white; }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      padding: 2rem;
+    }
+    .title { color: #000108; } /* extra style */
+  </style>
+</head>
+<body class="antialiased">
+
+  <header class="bg-card/80 backdrop-blur-sm sticky top-0 z-50 shadow-lg shadow-black/20">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold text-white tracking-wider">
+        <i class="fas fa-gamepad text-accent"></i> Pro<span class="text-accent">Gamer</span>
+      </a>
+      <ul class="hidden md:flex items-center space-x-8">
+        <!-- <li><a href="#about" class="hover:text-accent transition-colors duration-300">About</a></li> -->
+        <li><a href="#recent-games" class="hover:text-accent transition-colors duration-300">My Games</a></li>
+        <li><a href="#moments" class="hover:text-accent transition-colors duration-300">Moments</a></li>
+        <li><a href="#contact" class="hover:text-accent transition-colors duration-300">Contact</a></li>
+      </ul>
+      <button id="mobile-menu-button" type="button" class="md:hidden text-white focus:outline-none"> <i class="fas fa-bars text-2xl"></i>
+      </button>
+    </nav>
+    <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+      <ul class="flex flex-col space-y-4">
+        <li><a href="#about" class="block hover:text-accent transition-colors duration-300">About</a></li>
+        <li><a href="#recent-games" class="block hover:text-accent transition-colors duration-300">Recent Games</a></li>
+        <li><a href="#moments" class="block hover:text-accent transition-colors duration-300">Moments</a></li>
+        <li><a href="#contact" class="block hover:text-accent transition-colors duration-300">Contact</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+  <section class="hero-bg min-h-[120vh] flex items-center justify-between px-12 pt-20">
+    <div class="max-w-xl">
+      <h1 class="text-5xl font-extrabold text-white leading-tight mb-6">Front-End <span class="text-purple-500">Software Developer</span></h1>
+      <p class="text-gray-400 text-lg mb-8">Resolving design problems, building smart user interfaces and useful interactions, developing rich web applications and seamless web experiences.</p>
+      <a href="#about" class="btn-primary px-5 py-4 rounded-lg text-white font-semibold">About Me →</a>
+    </div>
+
+   <div class="relative hidden lg:block group overflow-hidden rounded-2xl shadow-2xl">
+  <video autoplay muted loop playsinline id="bg-video" class="rounded-2xl transform transition duration-700 group-hover:scale-110 group-hover:brightness-75">
+    <source src="WhatsAppImageatfejpg-MyVideo-Convert2video-com.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Overlay Text on Hover -->
+  <div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-700">
+    <!-- <h3 class="text-3xl font-bold text-white drop-shadow-lg">Epic Gameplay</h3> -->
+  </div>
+</div>
+
+<script>
+  const videoContainer = document.querySelector('.group');
+  const video = document.getElementById('bg-video');
+
+  videoContainer.addEventListener('mousemove', (e) => {
+    const { offsetWidth, offsetHeight } = videoContainer;
+    const x = (e.offsetX / offsetWidth - 0.5) * 20; // tilt range
+    const y = (e.offsetY / offsetHeight - 0.5) * 20;
+
+    video.style.transform = `scale(1.1) rotateX(${-y}deg) rotateY(${x}deg)`;
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+    video.style.transform = "scale(1) rotateX(0) rotateY(0)";
+  });
+</script>
+
+
+    </div>
+  </section>
+
+    <section id="about" class="relative bg-black py-24 text-white">
+  <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1617957741644-86c0c7a4a7f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80')] bg-cover bg-center opacity-30"></div>
+<div class="relative z-10 container mx-auto grid items-center gap-12 px-6 md:grid-cols-2">
+  
+  <!-- Gaming Video (Now on the Left) -->
+  <div class="order-2 flex justify-center md:order-1">
+    <video autoplay muted loop playsinline 
+      class="h-50 w-80 transform rounded-2xl shadow-2xl transition duration-400 hover:scale-110 hover:rotate-2 hover:shadow-pink-500/50">
+      <source src="about video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- About Me Text (Now on the Right) -->
+  <div class="group order-1 text-left transition-transform duration-500 hover:scale-105 md:order-2">
+    <h2 class="relative mb-4 inline-block text-5xl font-extrabold">
+      About Me
+      <span class="mt-2 block h-1 w-20 rounded-full bg-pink-500 transition-all duration-500 group-hover:w-28"></span>
+    </h2>
+    <p class="text-xl leading-relaxed text-gray-200 transition-colors duration-500 group-hover:text-pink-400">
+      I’m a passionate gamer who loves challenges and sharing epic gaming moments. <br />
+      My journey also includes development and design, and this portfolio reflects a mix of creativity, passion, and innovation.
+    </p>
+  </div>
+</div>
+</section>
+
+   <section id="recent-games" 
+  class="relative overflow-hidden py-20 text-white bg-cover bg-center bg-no-repeat bg-fixed" 
+  style="background-image: url('cyber punk.jpg');">
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto px-6 bg-transparent rounded-2xl p-6">
+    <!-- Section Title -->
+    <h2 class="relative mb-16 inline-block text-center text-4xl font-extrabold tracking-wide text-white md:text-5xl">
+      My Games . . .
+      <span class="absolute -bottom-2 left-1/2 h-1 w-24 -translate-x-1/2 transform rounded-full bg-pink-500"></span>
+    </h2>
+
+    <!-- Games Grid -->
+    <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <!-- Valorant Card -->
+      <div class="group relative h-96 w-full [perspective:1000px]">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]" id="card1">
+          <!-- Front -->
+          <div class="absolute inset-0 overflow-hidden rounded-xl shadow-md [backface-visibility:hidden]">
+            <img src="valorant image 2.jpg" alt="Valorant" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+              <div class="p-4">
+                <h3 class="text-xl font-bold text-white drop-shadow-md">Valorant</h3>
+                <span class="mt-2 inline-block rounded-full bg-transparent px-3 py-1 text-xs font-semibold text-white shadow-md">FPS | Riot</span>
+              </div>
+              <div class="p-4">
+                <button onclick="flipCardById('card1')" class="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">View More</button>
+              </div>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between rounded-xl bg-black p-6 text-center text-white [backface-visibility:hidden]">
+            <p class="text-sm leading-relaxed transition duration-300 hover:scale-105 hover:text-purple-400">Valorant is a free-to-play tactical shooter by Riot Games, combining precise gunplay with unique character abilities for strategic combat.</p>
+            <button onclick="flipCardById('card1')" class="mt-4 rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- GTA V Card -->
+      <div class="group relative h-96 w-full [perspective:1000px]">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]" id="card2">
+          <!-- Front -->
+          <div class="absolute inset-0 overflow-hidden rounded-xl shadow-md [backface-visibility:hidden]">
+            <img src="gta picture.jpg" alt="GTA V" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+              <div class="p-4">
+                <h3 class="text-xl font-bold text-white drop-shadow-md">GTA V</h3>
+                <span class="mt-2 inline-block rounded-full bg-transparent px-3 py-1 text-xs font-semibold text-white shadow-md">Openworld | Rockstar Games</span>
+              </div>
+              <div class="p-4">
+                <button onclick="flipCardById('card2')" class="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">View More</button>
+              </div>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between rounded-xl bg-black p-6 text-center text-white [backface-visibility:hidden]">
+            <p class="text-sm leading-relaxed transition duration-300 hover:scale-105 hover:text-purple-400">Grand Theft Auto V is an action-adventure game set in Los Santos. Players can switch between characters, complete missions, and explore a vast open world.</p>
+            <button onclick="flipCardById('card2')" class="mt-4 rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Elden Ring Card -->
+      <div class="group relative h-96 w-full [perspective:1000px]">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]" id="card3">
+          <!-- Front -->
+          <div class="absolute inset-0 overflow-hidden rounded-xl shadow-md [backface-visibility:hidden]">
+            <img src="elder img.jpg" alt="Elden Ring" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+              <div class="p-4">
+                <h3 class="text-xl font-bold text-white drop-shadow-md">Elden Ring</h3>
+                <span class="mt-2 inline-block rounded-full bg-transparent px-3 py-1 text-xs font-semibold text-white shadow-md">RPG | FromSoftware</span>
+              </div>
+              <div class="p-4">
+                <button onclick="flipCardById('card3')" class="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">View More</button>
+              </div>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between rounded-xl bg-black p-6 text-center text-white [backface-visibility:hidden]">
+            <p class="text-sm leading-relaxed transition duration-300 hover:scale-105 hover:text-purple-400">Elden Ring is a dark fantasy RPG developed by FromSoftware. Explore an open world filled with challenging enemies, bosses, and rich lore crafted by George R. R. Martin.</p>
+            <button onclick="flipCardById('card3')" class="mt-4 rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">Back</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Counter Strike 2 Card -->
+      <div class="group relative h-96 w-full [perspective:1000px]">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]" id="card4">
+          <!-- Front -->
+          <div class="absolute inset-0 overflow-hidden rounded-xl shadow-md [backface-visibility:hidden]">
+            <img src="cs2 image.jpg" alt="Counter Strike 2" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 flex flex-col justify-between bg-gradient-to-t from-black/90 via-black/60 to-transparent">
+              <div class="p-4">
+                <h3 class="text-xl font-bold text-orange-400 drop-shadow-md">Counter Strike 2</h3>
+                <span class="mt-2 inline-block rounded-full bg-white px-3 py-1 text-xs font-semibold text-orange-400 shadow-md">FPS | Valve</span>
+              </div>
+              <div class="p-4">
+                <button onclick="flipCardById('card4')" class="rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">View More</button>
+              </div>
+            </div>
+          </div>
+          <!-- Back -->
+          <div class="absolute inset-0 flex [transform:rotateY(180deg)] flex-col items-center justify-between rounded-xl bg-black p-6 text-center text-white [backface-visibility:hidden]">
+            <p class="text-sm leading-relaxed transition duration-300 hover:scale-105 hover:text-purple-400">Counter-Strike 2 is Valve’s latest competitive FPS with updated graphics, improved mechanics, and intense tactical gameplay loved by millions worldwide.</p>
+            <button onclick="flipCardById('card4')" class="mt-4 rounded-lg bg-purple-600 px-4 py-2 font-semibold text-white transition hover:scale-105 hover:bg-transparent">Back</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Epic Game Moments Section -->
+<section id="moments" class="relative overflow-hidden py-20 text-white">
+  <!-- Video background -->
+  <video autoplay muted loop playsinline class="absolute inset-0 h-full w-full object-cover object-bottom -z-10">
+    <source src="video 3.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Content -->
+  <div class="relative z-10 container mx-auto rounded-2xl bg-transparent p-6">
+    <h2 class="mb-12 text-left text-3xl font-bold text-white">Epic Game Moments</h2>
+
+    <!-- Grid layout with 6 cards -->
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Card 1 -->
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant1.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="MyFile1255.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant1.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="Valorant 2024.01.21 - 00.58.10.02.DVR.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant1.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="MyFile1255.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant image 2.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="MyFile1255.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant1.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="MyFile1255.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flip-card group relative h-80 [perspective:1000px] transition-transform duration-500 hover:scale-105 hover:shadow-purple-500/50">
+        <div class="flip-card-inner relative h-full w-full transition-transform duration-700 [transform-style:preserve-3d]">
+          <div class="flip-card-front absolute inset-0 overflow-hidden rounded-2xl bg-gray-900 shadow-xl [backface-visibility:hidden] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <video autoplay loop muted playsinline poster="valorant1.jpg" class="h-56 w-full object-cover transition duration-500 group-hover:scale-110">
+              <source src="" type="video/mp4" />
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80 group-hover:opacity-90 transition"></div>
+            <div class="absolute bottom-0 p-5 text-white">
+              <h2 class="mb-2 text-xl font-bold">World Record Speedrun</h2>
+              <p class="mb-4 text-gray-300">Breaking limits and setting records live.</p>
+              <button onclick="flipCard(this)" class="inline-flex items-center rounded-lg bg-purple-600 px-4 py-2 text-white transition hover:scale-110 hover:bg-purple-700">Watch Now</button>
+            </div>
+          </div>
+          <div class="flip-card-back absolute inset-0 flex items-center justify-center rounded-2xl bg-black [backface-visibility:hidden] [transform:rotateY(180deg)] group-hover:shadow-lg group-hover:shadow-purple-500/40">
+            <div class="relative w-full h-full">
+              <video controls class="h-full w-full rounded-2xl object-cover">
+                <source src="MyFile1255.mp4" type="video/mp4" />
+              </video>
+              <button onclick="flipBack(this)" class="absolute top-2 right-2 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-700">Back</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<style>
+  .flipped {
+    transform: rotateY(180deg);
+  }
+</style>
+
+<script>
+  function flipCardById(cardId) {
+    const card = document.getElementById(cardId);
+    card.classList.toggle("flipped");
+  }
+
+  function flipCard(button) {
+    const card = button.closest('.flip-card').querySelector('.flip-card-inner');
+    card.style.transform = 'rotateY(180deg)';
+    const video = card.querySelector('.flip-card-back video');
+    video.currentTime = 0;
+    video.play();
+  }
+
+  function flipBack(button) {
+    const card = button.closest('.flip-card').querySelector('.flip-card-inner');
+    card.style.transform = 'rotateY(0deg)';
+    const video = card.querySelector('.flip-card-back video');
+    video.pause();
+    video.currentTime = 0;
+  }
+</script>
+
+
+   <section id="contact" 
+  class="relative overflow-hidden py-20 text-center text-white">
+
+  <!-- Video background -->
+  <video autoplay muted loop playsinline 
+    class="absolute inset-0 h-full w-full object-cover -z-10">
+    <source src="216369_tiny.mp4" type="video/mp4">
+    <!-- fallback text -->
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-black/70"></div>
+
+  <!-- Background glow effect -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-20 left-1/4 h-72 w-72 animate-pulse rounded-full bg-black opacity-30 blur-3xl"></div>
+    <div class="absolute right-1/4 bottom-20 h-72 w-72 animate-pulse rounded-full bg-pink-600 opacity-30 blur-3xl"></div>
+  </div>
+
+  <!-- Dark overlay -->
+  <div class="absolute inset-0 bg-transparent"></div>
+
+  <!-- Background glow effect -->
+  <div class="absolute inset-0 -z-10">
+    <div class="absolute top-20 left-1/4 h-72 w-72 animate-pulse rounded-full bg-black opacity-30 blur-3xl"></div>
+    <div class="absolute right-1/4 bottom-20 h-72 w-72 animate-pulse rounded-full bg-pink-600 opacity-30 blur-3xl"></div>
+  </div>
+
+  <h2 class="mb-6 text-4xl font-extrabold tracking-wide text-white drop-shadow-lg md:text-5xl">Let’s Work Together</h2>
+  <p id="contact-description" class="upper mx-auto mb-10 max-w-2xl transform font-mono font-bold text-lg text-gray-300 opacity-100 transition duration-700 hover:scale-125 hover:text-purple-400">Have a project, idea, or opportunity in mind? I’d love to hear from you. Let’s connect and create something amazing....</p>
+
+  <!-- Hover card for contact button -->
+  <div class="group relative inline-block">
+    <button id="contact-button" class="relative z-10 inline-flex items-center gap-2 rounded-full border-2 border-purple-600 bg-black px-8 py-4 text-lg font-semibold text-white transition duration-300 hover:scale-105 hover:bg-transparent hover:text-purple-400">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12H8m8 0l-4-4m4 4l-4 4" />
+      </svg>
+      Contact Me
+    </button>
+    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-50 blur-2xl transition group-hover:opacity-75"></div>
+  </div>
+
+  <!-- Social icons (hidden until button is clicked) -->
+  <div id="social-icons" class="mt-8 flex hidden justify-center gap-6">
+    <a href="#" class="transform text-3xl text-white transition hover:scale-125 hover:text-purple-400"><i class="fab fa-linkedin"></i></a>
+    <a href="mailto:your.email@example.com" class="transform text-3xl text-white transition hover:scale-125 hover:text-pink-400"><i class="fas fa-envelope"></i></a>
+    <a href="#" class="transform text-3xl text-white transition hover:scale-125 hover:text-gray-400"><i class="fab fa-github"></i></a>
+    <a href="#" class="transform text-3xl text-white transition hover:scale-125 hover:text-indigo-400"><i class="fab fa-discord"></i></a>
+  </div>
+</section>
+
+<script>
+  const description = document.getElementById('contact-description');
+  let fullText = description.textContent;
+  description.textContent = '';
+  let isTyping = false;
+
+  let lastScrollTop = 0;
+  window.addEventListener('scroll', function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (scrollTop < lastScrollTop && !isTyping) {
+      // scrolling up → typewriter effect
+      isTyping = true;
+      let i = 0;
+      description.textContent = '';
+      let typing = setInterval(() => {
+        if (i < fullText.length) {
+          description.textContent += fullText.charAt(i);
+          i++;
+        } else {
+          clearInterval(typing);
+          isTyping = false;
+        }
+      }, 50);
+    }
+    lastScrollTop = scrollTop;
+  });
+
+  // Toggle social icons on button click
+  document.getElementById('contact-button').addEventListener('click', () => {
+    const icons = document.getElementById('social-icons');
+    icons.classList.toggle('hidden');
+  });
+</script>
+  </main>
+
+  <footer class="fixed bottom-0 left-0 w-full bg-transparent backdrop-blur-md border-t border-transparent shadow-lg">
+  <div class="flex justify-between items-center px-6 py-4">
+    <div class="flex flex-col">
+      <p class="text-gray-300">&copy; 2025 Fram Gaming.</p>
+      <p class="text-gray-300">Designed by Tuhin Paul.</p>
+    </div>
+    <p id="liveTime" class="text-gray-400 animate-pulse"></p>
+  </div>
+</footer>
+
+
+<script>
+  function showTime() {
+    document.getElementById('liveTime').innerHTML = new Date().toLocaleTimeString();
+  }
+  showTime();
+  setInterval(showTime, 1000);
+</script>
+
+
+  <script type="text/javascript"> /* Added type="text/javascript" */
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Show live time in footer
+    function showTime() {
+      document.getElementById('currentTime').innerHTML = new Date().toUTCString();
+    }
+    showTime();
+    setInterval(showTime, 1000);
+  </script>
+
+</body>
+</html>
